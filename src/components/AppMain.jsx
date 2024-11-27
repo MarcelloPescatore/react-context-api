@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import BlogList from "./BlogList/BlogList";
 import { Link } from 'react-router-dom';
+import DataContext from "../contexts/DataContext";
 
 export default function AppMain() {
   // const [articles, setArticles] = useState([]);
@@ -89,11 +90,12 @@ export default function AppMain() {
         <Link to='/posts/create' className="btn btn-primary btn-lg mt-2">
             Add more posts
         </Link>
-        <BlogList
-          articlesCalled={articlesCalled}
-          onDelete={deleteArticleCalled}
-          onUpdate={updateArticle}
-        />
+        <DataContext.Provider value={{articlesCalled, setArticlesCalled}}>
+          <BlogList
+            onDelete={deleteArticleCalled}
+            onUpdate={updateArticle}
+          />
+        </DataContext.Provider>
       </div>
     </>
   );

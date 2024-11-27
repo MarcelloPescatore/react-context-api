@@ -1,19 +1,20 @@
 import React, { useState } from "react";
 import ArticlesCalled from "./Articles/ArticlesCalled";
 
-export default function BlogList({ articlesCalled, onDelete, onUpdate }) {
+
+export default function BlogList({ onDelete, onUpdate }) {
     const [editingId, setEditingId] = useState(null);
     const [editingData, setEditingData] = useState({});
 
-    const handleEdit = (articlesCalled) => {
+    const handleEdit = (article) => {
         // Imposto l'articolo in modifica e precompila i dati
-        setEditingId(articlesCalled.id);
+        setEditingId(article.id);
         setEditingData({
-            title: articlesCalled.title,
-            slug: articlesCalled.slug,
-            image: articlesCalled.image,
-            content: articlesCalled.content,
-            status: articlesCalled.status
+            title: article.title,
+            slug: article.slug,
+            image: article.image,
+            content: article.content,
+            status: article.status
         });
     };
 
@@ -32,24 +33,23 @@ export default function BlogList({ articlesCalled, onDelete, onUpdate }) {
         setEditingId(null);
     };
 
-    const handlePublish = (title) => {
+    /* const handlePublish = (title) => {
         const articleToUpdate = articlesCalled.find(article => article.title === title);
         if (articleToUpdate.status === "draft") {
             // Cambia lo stato a 'published'
             onUpdate(title, { status: "published" });
         }
-    };
+    }; */
 
     return (
         <div className="list">
             {/* articoli chiamata fetch */}
             <ArticlesCalled 
-                articlesCalled={articlesCalled} 
                 handleChange={handleChange} 
                 handleEdit={handleEdit} 
                 handleUpdate={handleUpdate} 
                 setEditingId={setEditingId} 
-                handlePublish={handlePublish}
+                /* handlePublish={handlePublish} */
                 editingId={editingId} 
                 editingData={editingData} 
                 onDelete={onDelete} 

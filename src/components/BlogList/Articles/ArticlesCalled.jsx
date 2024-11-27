@@ -1,9 +1,18 @@
 import { Link } from "react-router-dom"
+import { useContext } from "react";
+import DataContext from '../../../contexts/DataContext';
 
-export default function ArticlesCalled({ articlesCalled, handleChange, handleEdit, handleUpdate, handlePublish, setEditingId, editingId, editingData, onDelete }) {
+export default function ArticlesCalled({ handleChange, handleEdit, handleUpdate, /* handlePublish, */ setEditingId, editingId, editingData, onDelete }) {
+    
+    const {articlesCalled } = useContext(DataContext)
+
+    if (!articlesCalled || articlesCalled.length === 0) {
+        return <div>Nessun articolo disponibile.</div>;
+    }
+    
     return (
         <>
-            {articlesCalled.map((article) => {
+            {articlesCalled .map((article) => {
                 const imageUrl = `http://localhost:3002/imgs/posts/${article.image}`
                 return (<div key={article.id} className="blog-item">
                     {editingId === article.id ? (
@@ -56,12 +65,12 @@ export default function ArticlesCalled({ articlesCalled, handleChange, handleEdi
                                 <button onClick={() => handleEdit(article)}>Edit</button>
                                 {/* cancella la modifica */}
                                 <button onClick={() => onDelete(article.title)}>Delete</button>
-                                {/* Bottone per cambiare stato da 'draft' a 'published' */}
+                                {/* Bottone per cambiare stato da 'draft' a 'published' 
                                 {article.status === "draft" && (
                                     <button className="publish" onClick={() => handlePublish(article.title)}>
                                         Publish
                                     </button>
-                                )}
+                                )} */}
                                 <Link to={`/posts/${article.slug}`}>
                                     <button>View Page</button>
                                 </Link>
